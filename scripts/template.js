@@ -1,11 +1,14 @@
 const foodSection = `
                     <div>
                         <img>
-                        <h2></h2>
-                        <div></div>
+                        <h2 class="foodSectionTitle"></h2>
+                        <div class="foodDishesContainer"></div>
                     </div>
 `;
 
 const foodDish = `
-                 <h2></h2>
+                <div>
+                    <h2 class="foodDishesTitle"></h2>
+                    <p class="foodDescriptions"></p>
+                </div>
 `
