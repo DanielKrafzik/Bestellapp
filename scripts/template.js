@@ -22,7 +22,7 @@ const dishBasket = `
                             <button>-</button>
                             <p class="orderCounter"></p>
                             <button>+</button>
-                            <p></p>
+                            <p class="basketFoodPrice"></p>
                             <img>
                         </div>
                     </div>
