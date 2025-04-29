@@ -19,7 +19,7 @@ const dishBasket = `
                     <div>
                         <h3 class="basketFoodTitle"></h3>
                         <div>
-                            <button>-</button>
+                            <button onClick="decreaseDish(this)">-</button>
                             <p class="orderCounter"></p>
                             <button>+</button>
                             <p class="basketFoodPrice"></p>

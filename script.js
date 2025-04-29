@@ -24,6 +24,7 @@ function renderDishes(dishData, dishDataIndex) {
         } else {
             document.querySelectorAll(".foodPrice")[foodCounter].innerHTML = ele.price;
         }
+        renderEuroPrice();
         foodCounter++;
     }
 };
@@ -33,11 +34,11 @@ function addDishToBasket(ele) {
         basketTitlesArray.push(ele.parentElement.querySelector(".foodDishesTitle").innerText);
         document.getElementById("basketContainer").innerHTML += dishBasket; 
         document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)].innerHTML = ele.previousElementSibling.innerHTML;
-        foodCounterArray.push(1); 
+        foodCounterArray.push(1);
         renderBasket();
     } else {
         foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)]++;
-        document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)].innerHTML = Math.round((Number(document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)].innerHTML) + Number(ele.previousElementSibling.innerHTML)) * 100) / 100;
+        document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)].innerHTML = Math.round((Number(document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)].innerHTML.replace("€", "")) + Number(ele.previousElementSibling.innerHTML.replace("€", ""))) * 100) / 100 + "€";
     }
     document.querySelectorAll(".orderCounter")[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)].innerHTML = foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)];
 };
@@ -47,8 +48,22 @@ function renderBasket() {
     basketTitleCounter++;
 };
 
-function renderBasketPrice() {
-
+function renderEuroPrice() {
+    if(document.querySelectorAll(".foodPrice")[foodCounter].innerHTML.includes(".")) {
+        document.querySelectorAll(".foodPrice")[foodCounter].innerHTML += "0€"
+    } else {
+        document.querySelectorAll(".foodPrice")[foodCounter].innerHTML += ".00€"
+    }
 }
 
-console.log(Number(document.querySelectorAll(".foodPrice")[0].innerHTML) + Number(document.querySelectorAll(".foodPrice")[0].innerHTML))
+function decreaseDish(ele) {
+    if(foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)] > 1) {
+        foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)]--;
+        document.querySelectorAll(".orderCounter")[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)].innerHTML = foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)];
+    } else {
+        ele.parentElement.parentElement.remove();
+        foodCounterArray.splice(basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText), 1);
+        basketTitlesArray.splice(basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText), 1);
+        basketTitleCounter--;
+    }
+}
