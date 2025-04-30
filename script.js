@@ -38,7 +38,12 @@ function addDishToBasket(ele) {
         renderBasket();
     } else {
         foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)]++;
-        document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)].innerHTML = Math.round((Number(document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)].innerHTML.replace("€", "")) + Number(ele.previousElementSibling.innerHTML.replace("€", ""))) * 100) / 100 + "€";
+        document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)].innerHTML = Math.round((Number(document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)].innerHTML.replace("€", "")) + Number(ele.previousElementSibling.innerHTML.replace("€", ""))) * 100) / 100;
+        if(document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)].innerHTML.includes(".")) {
+            document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)].innerHTML += "0€";
+        } else {
+            document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)].innerHTML += ".00€"
+        }
     }
     document.querySelectorAll(".orderCounter")[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)].innerHTML = foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)];
 };
@@ -59,9 +64,10 @@ function renderEuroPrice() {
 function decreaseDish(ele) {
     let dishPriceSum = ele.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML;
     if(foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)] > 1) {
-        document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerHTML)].innerHTML = Math.round(Number(dishPriceSum.replace("€", "")) / foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)] * (foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)] - 1) * 100) / 100 + "€";
+        document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerHTML)].innerHTML = Math.round(Number(dishPriceSum.replace("€", "")) / foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)] * (foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)] - 1) * 100) / 100;
         foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)]--;
         document.querySelectorAll(".orderCounter")[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)].innerHTML = foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)];
+        renderEuroPriceBasket(ele);
     } else {
         ele.parentElement.parentElement.remove();
         foodCounterArray.splice(basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText), 1);
@@ -72,9 +78,19 @@ function decreaseDish(ele) {
 
 function increaseDish(ele) {
     let dishPriceSum = ele.nextElementSibling.innerHTML;
-    document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerHTML)].innerHTML = Math.round(Number(dishPriceSum.replace("€", "")) / foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)] * (foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)] + 1) * 100) / 100 + "€";
+    document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerHTML)].innerHTML = Math.round(Number(dishPriceSum.replace("€", "")) / foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)] * (foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)] + 1) * 100) / 100;
     foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)]++;
     document.querySelectorAll(".orderCounter")[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)].innerHTML = foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)];
+    renderEuroPriceBasket(ele);
+    calculateSubtotal(ele);
+}
+
+function renderEuroPriceBasket(ele) {
+    if(document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerHTML)].innerHTML.includes(".")) {
+        document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerHTML)].innerHTML += "0€";
+    } else {
+        document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerHTML)].innerHTML += ".00€";
+    }
 }
 
 function deleteDish(ele) {
@@ -82,4 +98,15 @@ function deleteDish(ele) {
     foodCounterArray.splice(basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText), 1);
     basketTitlesArray.splice(basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText), 1);
     basketTitleCounter--;
+}
+
+function calculateSubtotal(ele) {
+    if(document.getElementById("basketSubtotal").innerHTML === "") {
+        document.getElementById("basketSubtotal").innerHTML = ele.nextElementSibling.innerText;
+    } else {
+        let a = document.getElementById("basketSubtotal").innerHTML.replace("€", "");
+        let b = Number(a) + Number(ele.nextElementSibling.innerText.replace("€", "")) / foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerHTML)];
+        document.getElementById("basketSubtotal").innerHTML = b;
+        console.log(Number(a))
+    }
 }
