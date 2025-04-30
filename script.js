@@ -100,7 +100,7 @@ function deleteDish(ele) {
     basketTitleCounter--;
 }
 
-function calculateSubtotal(ele) {
+/* function calculateSubtotal(ele) {
     if(document.getElementById("basketSubtotal").innerHTML === "") {
         document.getElementById("basketSubtotal").innerHTML = ele.nextElementSibling.innerText;
     } else {
@@ -109,4 +109,4 @@ function calculateSubtotal(ele) {
         document.getElementById("basketSubtotal").innerHTML = b;
         console.log(Number(a))
     }
-}
+} */
