@@ -57,7 +57,9 @@ function renderEuroPrice() {
 }
 
 function decreaseDish(ele) {
+    let dishPriceSum = ele.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML;
     if(foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)] > 1) {
+        //dishPriceSum = Math.round(Number(dishPriceSum.replace("€", "")) / foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)] * (foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)] - 1) * 100) / 100 + "€";
         foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)]--;
         document.querySelectorAll(".orderCounter")[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)].innerHTML = foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)];
     } else {
@@ -66,4 +68,5 @@ function decreaseDish(ele) {
         basketTitlesArray.splice(basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText), 1);
         basketTitleCounter--;
     }
+    console.log(dishPriceSum)
 }
