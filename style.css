@@ -2,3 +2,12 @@ main {
     display: flex;
     justify-content: space-around;
 }
+
+.bin {
+    height: 64px;
+    width: 64px;
+}
+
+.bin:hover {
+    cursor: pointer;
+}

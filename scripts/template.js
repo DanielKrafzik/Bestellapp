@@ -21,9 +21,9 @@ const dishBasket = `
                         <div>
                             <button onClick="decreaseDish(this)">-</button>
                             <p class="orderCounter"></p>
-                            <button>+</button>
+                            <button onClick="increaseDish(this)">+</button>
                             <p class="basketFoodPrice"></p>
-                            <img>
+                            <img src="./assets/img/bin.png" onClick="deleteDish(this)" class="bin">
                         </div>
                     </div>
 `
