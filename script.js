@@ -176,3 +176,28 @@ function renderPizzaSizeSelector(ele) {
         }
     })
 }
+
+function pizzaToBasket(ele) {
+    basketTitlesArray.push(document.getElementById("pizzaSizeSelectorTitle").innerText);
+    document.getElementById("basketContainer").innerHTML += dishBasket;
+    document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(document.getElementById("pizzaSizeSelectorTitle").innerText)].innerHTML = ele.previousElementSibling.innerHTML;
+    foodCounterArray.push(1);
+    document.querySelectorAll(".orderCounter")[basketTitlesArray.indexOf(document.getElementById("pizzaSizeSelectorTitle").innerText)].innerHTML = foodCounterArray[basketTitlesArray.indexOf(document.getElementById("pizzaSizeSelectorTitle").innerText)];
+    renderBasket();
+    subtotalThroughSizeSelector(ele);
+    document.getElementById("pizzaSizeSelector").style.display = "none";
+}
+
+function subtotalThroughSizeSelector(ele) {
+    if(document.getElementById("basketSubtotal").innerHTML === "" || document.getElementById("basketSubtotal").innerHTML === "0") {
+        document.getElementById("basketSubtotal").innerHTML = ele.previousElementSibling.innerText;
+    } else {
+        document.getElementById("basketSubtotal").innerHTML = Math.round((Number(document.getElementById("basketSubtotal").innerHTML.replace("€", "")) + Number(ele.previousElementSibling.innerText.replace("€", ""))) * 100) / 100;
+        if(document.getElementById("basketSubtotal").innerHTML.includes(".")) {
+            document.getElementById("basketSubtotal").innerHTML += "0€";
+        } else {
+            document.getElementById("basketSubtotal").innerHTML += ".00€";
+        }
+    }
+    calculateBasketTotal();
+}
