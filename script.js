@@ -46,6 +46,7 @@ function addDishToBasket(ele) {
         }
     }
     document.querySelectorAll(".orderCounter")[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)].innerHTML = foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)];
+    calculateSubtotalThroughDishSelection(ele);
 };
 
 function renderBasket() {
@@ -68,7 +69,9 @@ function decreaseDish(ele) {
         foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)]--;
         document.querySelectorAll(".orderCounter")[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)].innerHTML = foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)];
         renderEuroPriceBasket(ele);
+        calculateSubtotal(ele);
     } else {
+        calculateSubtotal(ele);
         ele.parentElement.parentElement.remove();
         foodCounterArray.splice(basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText), 1);
         basketTitlesArray.splice(basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText), 1);
@@ -94,19 +97,63 @@ function renderEuroPriceBasket(ele) {
 }
 
 function deleteDish(ele) {
+    document.getElementById("basketSubtotal").innerHTML = Math.round((Number(document.getElementById("basketSubtotal").innerHTML.replace("€", "")) - Number(ele.previousElementSibling.innerHTML.replace("€", ""))) * 100) / 100;
+    if(document.getElementById("basketSubtotal").innerHTML.includes(".")) {
+        document.getElementById("basketSubtotal").innerHTML += "0€";
+    } else {
+        document.getElementById("basketSubtotal").innerHTML += ".00€";
+    }
+    calculateBasketTotal();
     ele.parentElement.parentElement.remove();
     foodCounterArray.splice(basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText), 1);
     basketTitlesArray.splice(basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText), 1);
     basketTitleCounter--;
 }
 
-/* function calculateSubtotal(ele) {
-    if(document.getElementById("basketSubtotal").innerHTML === "") {
-        document.getElementById("basketSubtotal").innerHTML = ele.nextElementSibling.innerText;
+function calculateSubtotal(ele) {
+    if(document.getElementById("basketSubtotal").innerHTML === "" || document.getElementById("basketSubtotal").innerHTML === "0") {
+        if(ele.innerText === "+") {
+            document.getElementById("basketSubtotal").innerHTML = ele.nextElementSibling.innerText;
+        } else {
+            document.getElementById("basketSubtotal").innerHTML = ele.nextElementSibling.nextElementSibling.nextElementSibling.innerText;
+        }
     } else {
         let a = document.getElementById("basketSubtotal").innerHTML.replace("€", "");
-        let b = Number(a) + Number(ele.nextElementSibling.innerText.replace("€", "")) / foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerHTML)];
+        let b;
+        if (ele.innerText === "+") {
+            b = Math.round((Number(a) + Number(ele.nextElementSibling.innerText.replace("€", "")) / foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerHTML)]) * 100) / 100;
+        } else {
+            b = Math.round((Number(a) - Number(ele.nextElementSibling.nextElementSibling.nextElementSibling.innerText.replace("€", "")) / foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerHTML)]) * 100) / 100;
+        }
         document.getElementById("basketSubtotal").innerHTML = b;
-        console.log(Number(a))
+        if(document.getElementById("basketSubtotal").innerHTML.includes(".")) {
+            document.getElementById("basketSubtotal").innerHTML += "0€"
+        } else {
+            document.getElementById("basketSubtotal").innerHTML += ".00€"
+        }
     }
-} */
+    calculateBasketTotal();
+} 
+
+function calculateSubtotalThroughDishSelection(ele) {
+    if(document.getElementById("basketSubtotal").innerHTML === "" || document.getElementById("basketSubtotal").innerHTML === "0") {
+        document.getElementById("basketSubtotal").innerHTML = ele.previousElementSibling.innerText;
+    } else {
+        document.getElementById("basketSubtotal").innerHTML = Math.round((Number(document.getElementById("basketSubtotal").innerHTML.replace("€", "")) + Number(ele.previousElementSibling.innerHTML.replace("€", ""))) * 100) / 100;
+        if(document.getElementById("basketSubtotal").innerHTML.includes(".")) {
+            document.getElementById("basketSubtotal").innerHTML += "0€";
+        } else {
+            document.getElementById("basketSubtotal").innerHTML += ".00€"; 
+        }
+    }
+    calculateBasketTotal();
+}
+
+function calculateBasketTotal() {
+    document.getElementById("basketTotal").innerHTML = Math.round((Number(document.getElementById("basketSubtotal").innerHTML.replace("€", "")) + Number(document.getElementById("deliveryCosts").innerHTML.replace("€", ""))) * 100) / 100;
+    if(document.getElementById("basketTotal").innerHTML.includes(".")) {
+        document.getElementById("basketTotal").innerHTML += "0€";
+    } else {
+        document.getElementById("basketTotal").innerHTML += ".00€";
+    }
+}
