@@ -1,0 +1,8 @@
+.bin {
+    height: 64px;
+    width: 64px;
+}
+
+.bin:hover {
+    cursor: pointer;
+}

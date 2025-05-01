@@ -1,18 +1,21 @@
+body {
+    background-color: rgb(255, 128, 0);
+    font-family: "Roboto";
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+#logo {
+    width: 128px;
+}
+
 main {
     display: flex;
     justify-content: space-around;
-}
-
-.bin {
-    height: 64px;
-    width: 64px;
-}
-
-.bin:hover {
-    cursor: pointer;
-}
-
-#pizzaSizeSelector {
-    display: none;
-    flex-direction: column;
+    background-color: rgb(255, 255, 255);
 }

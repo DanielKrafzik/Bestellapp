@@ -6,7 +6,6 @@ let foodGroup;
 let foodCounter = 0;
 let basketTitleCounter = 0;
 
-
 for (let foodGroupIndex = 0; foodGroupIndex < myDishes.length; foodGroupIndex++) {
     foodGroup = myDishes[foodGroupIndex];
     foodContainer.innerHTML += foodSection;
@@ -165,9 +164,9 @@ function calculateBasketTotal() {
 
 function renderPizzaSizeSelector(ele) {
     document.getElementById("pizzaSizeSelectorTitle").innerHTML = ele.parentElement.querySelector(".foodDishesTitle").innerHTML;
-    document.getElementById("20cmPrice").innerHTML = myDishes[2].foodData[pizzaTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerHTML)].price["20cm"];
-    document.getElementById("26cmPrice").innerHTML = myDishes[2].foodData[pizzaTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerHTML)].price["26cm"];
-    document.getElementById("32cmPrice").innerHTML = myDishes[2].foodData[pizzaTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerHTML)].price["32cm"];
+    document.getElementById("20cmPrice").innerHTML = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerHTML)].price["20cm"];
+    document.getElementById("26cmPrice").innerHTML = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerHTML)].price["26cm"];
+    document.getElementById("32cmPrice").innerHTML = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerHTML)].price["32cm"];
     document.querySelectorAll(".pizzaEuroAdding").forEach((item) => {
         if(item.innerHTML.includes(".")) {
             item.innerHTML += "0€";

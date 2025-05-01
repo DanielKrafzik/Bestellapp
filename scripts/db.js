@@ -1,4 +1,37 @@
 let myDishes = [
+    {
+        "foodData": [
+            {
+                "name": "Pizza Napoletana",
+                "ingredients": "Sardellen und Oliven",
+                "price": {
+                    "20cm": 7.00,
+                    "26cm": 8.50,
+                    "32cm": 10.00
+                }
+            },
+            {
+                "name": "Pizza Funghi",
+                "ingredients": "Champignons",
+                "price": {
+                    "20cm": 7.00,
+                    "26cm": 8.50,
+                    "32cm": 10.00
+                }
+            },
+            {
+                "name": "Pizza Gyros-Schafskäse",
+                "ingredients": "Gyros und Schafskäse",
+                "price": {
+                    "20cm": 8.00,
+                    "26cm": 10.00,
+                    "32cm": 12.50
+                }
+            },
+        ],
+        "foodImg": "",
+        "foodTitle": "Italienische Speisen"
+    },
         {
         "foodData": [
             {
@@ -40,38 +73,5 @@ let myDishes = [
         ],
         "foodImg": "",
         "foodTitle": "Türkische Speisen"
-    },
-        {
-        "foodData": [
-            {
-                "name": "Pizza Napoletana",
-                "ingredients": "Sardellen und Oliven",
-                "price": {
-                    "20cm": 7.00,
-                    "26cm": 8.50,
-                    "32cm": 10.00
-                }
-            },
-            {
-                "name": "Pizza Funghi",
-                "ingredients": "Champignons",
-                "price": {
-                    "20cm": 7.00,
-                    "26cm": 8.50,
-                    "32cm": 10.00
-                }
-            },
-            {
-                "name": "Pizza Gyros-Schafskäse",
-                "ingredients": "Gyros und Schafskäse",
-                "price": {
-                    "20cm": 8.00,
-                    "26cm": 10.00,
-                    "32cm": 12.50
-                }
-            },
-        ],
-        "foodImg": "",
-        "foodTitle": "Italienische Speisen"
-    }
+    }        
 ]
