@@ -1,6 +1,7 @@
 const foodContainer = document.getElementById("foodRenderContainer");
 let basketTitlesArray = [];
 let foodCounterArray = [];
+let pizzaTitlesArray = [];
 let foodGroup;
 let foodCounter = 0;
 let basketTitleCounter = 0;
@@ -21,6 +22,7 @@ function renderDishes(dishData, dishDataIndex) {
         document.querySelectorAll(".foodDescriptions")[foodCounter].innerHTML = ele.ingredients;
         if(ele.price["20cm"]) {
             document.querySelectorAll(".foodPrice")[foodCounter].innerHTML = ele.price["20cm"];
+            pizzaTitlesArray.push(ele.name);
         } else {
             document.querySelectorAll(".foodPrice")[foodCounter].innerHTML = ele.price;
         }
@@ -30,7 +32,10 @@ function renderDishes(dishData, dishDataIndex) {
 };
 
 function addDishToBasket(ele) {
-    if(!basketTitlesArray.includes(ele.parentElement.querySelector(".foodDishesTitle").innerText)) {
+    if(ele.parentElement.querySelector(".foodDishesTitle").innerText.includes("Pizza")) {
+        renderPizzaSizeSelector(ele);
+        return document.getElementById("pizzaSizeSelector").style.display = "flex";
+    } else if(!basketTitlesArray.includes(ele.parentElement.querySelector(".foodDishesTitle").innerText)) {
         basketTitlesArray.push(ele.parentElement.querySelector(".foodDishesTitle").innerText);
         document.getElementById("basketContainer").innerHTML += dishBasket; 
         document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerText)].innerHTML = ele.previousElementSibling.innerHTML;
@@ -156,4 +161,18 @@ function calculateBasketTotal() {
     } else {
         document.getElementById("basketTotal").innerHTML += ".00€";
     }
+}
+
+function renderPizzaSizeSelector(ele) {
+    document.getElementById("pizzaSizeSelectorTitle").innerHTML = ele.parentElement.querySelector(".foodDishesTitle").innerHTML;
+    document.getElementById("20cmPrice").innerHTML = myDishes[2].foodData[pizzaTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerHTML)].price["20cm"];
+    document.getElementById("26cmPrice").innerHTML = myDishes[2].foodData[pizzaTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerHTML)].price["26cm"];
+    document.getElementById("32cmPrice").innerHTML = myDishes[2].foodData[pizzaTitlesArray.indexOf(ele.parentElement.querySelector(".foodDishesTitle").innerHTML)].price["32cm"];
+    document.querySelectorAll(".pizzaEuroAdding").forEach((item) => {
+        if(item.innerHTML.includes(".")) {
+            item.innerHTML += "0€";
+        } else {
+            item.innerHTML += ".00€";
+        }
+    })
 }

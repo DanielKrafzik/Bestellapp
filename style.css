@@ -11,3 +11,8 @@ main {
 .bin:hover {
     cursor: pointer;
 }
+
+#pizzaSizeSelector {
+    display: none;
+    flex-direction: column;
+}
