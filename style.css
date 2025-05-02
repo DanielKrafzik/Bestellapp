@@ -1,6 +1,9 @@
 body {
     background-color: rgb(255, 128, 0);
-    font-family: "Roboto";
+    font-family: "Roboto", sans-serif;
+    display: flex;
+    flex-direction: column;
+
 }
 
 header {
@@ -8,6 +11,8 @@ header {
     justify-content: space-between;
     align-items: center;
     color: white;
+    width: 100%;
+    margin: 12px auto;
 }
 
 #logo {
@@ -16,6 +21,132 @@ header {
 
 main {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     background-color: rgb(255, 255, 255);
+    width: 100%;
+    margin: 0 auto;
+}
+
+#mainContentWithImg {
+    width: calc(100% - 200px);
+}
+
+#mainContent {
+    margin: 12px;
+}
+
+#evaluation {
+    color: rgb(255, 128, 0)
+}
+
+nav {
+    background-color: rgb(247, 245, 241);
+    height: 32px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.foodCultureButton {
+    cursor: pointer;
+    height: 24px;
+    border: none;
+    background-color: rgb(247, 245, 241);
+    color: rgb(255, 128, 0);
+    font-weight: bold;
+    font-size: large;
+}
+
+.foodCultureButton:hover {
+    background-color: rgb(220, 220, 220);
+}
+
+.singleDishContainer {
+    border: 1px solid lightgray;
+    margin-bottom: 12px;
+    padding-left: 12px;
+    position: relative;
+}
+
+.singleDishContainer .foodPrice {
+    color: rgb(255, 128, 0);
+    font-weight: bold;
+}
+
+.singleDishContainer button{
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    height: 24px;
+    border: none;
+    background-color: white;
+    color: rgb(255, 128, 0);
+    font-weight: bold;
+    font-size: large;
+    border-left: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+}
+
+.singleDishContainer button:hover{
+    color: rgba(255, 128, 0, 0.8);
+    background-color: rgba(255, 128, 0, 0.1);
+}
+
+#foodhouseImg {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: 100% 75%;
+}
+
+.foodSectionImg {
+    width: 100%;
+    height: 128px;
+    object-fit: cover;
+    margin-top: 24px;
+}
+
+#pizzaSizeSelector {
+    position: absolute;
+    background-color: white;
+    left: 25%;
+    right: 25%;
+    border: 1px solid lightgray;
+    width: 50%;
+    padding: 12px;
+}
+
+#pizzaSizeSelector h3,h4 {
+    text-align: center;
+}
+
+#pizzaSizeSelector button {
+    cursor: pointer;
+    height: 24px;
+    border: none;
+    background-color: white;
+    color: rgb(255, 128, 0);
+    font-weight: bold;
+    font-size: large;
+    border-left: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+}
+
+#closePizzaSizeSelector {
+    background-color: rgb(255, 128, 0) !important;
+    color: white !important;
+    border: none !important;
+    height: 32px !important;
+}
+
+footer {
+    width: 100%;
+    margin: 24px auto;
+    display: flex;
+    justify-content: center;
+}
+
+#footerLogo {
+    width: 192px;
 }

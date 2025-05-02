@@ -29,7 +29,7 @@ let myDishes = [
                 }
             },
         ],
-        "foodImg": "",
+        "foodImg": "./assets/img/Pizza.jpg",
         "foodTitle": "Italienische Speisen"
     },
         {
@@ -50,7 +50,7 @@ let myDishes = [
                 "price": 18.90
             },
         ],
-        "foodImg": "",
+        "foodImg": "./assets/img/Auflauf.jpg",
         "foodTitle": "Griechische Speisen",
     },
         {
@@ -71,7 +71,7 @@ let myDishes = [
                 "price": 14.50
             }
         ],
-        "foodImg": "",
+        "foodImg": "./assets/img/Döner.jpg",
         "foodTitle": "Türkische Speisen"
     }        
 ]

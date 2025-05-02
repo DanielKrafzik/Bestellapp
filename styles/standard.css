@@ -5,3 +5,11 @@
   margin: 0;
   padding: 0;  
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+.maxWidth1440 {
+  max-width: 1440px;
+}

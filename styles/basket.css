@@ -1,8 +1,71 @@
+#basketWrapper {    
+    border-left: 2px solid lightgray;
+}
+
+#basketStickyContainer {
+    width: 200px;
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+}
+
+#basketStickyContainer h2 {
+    text-align: center;
+    border-bottom: 2px solid lightgray;
+    padding-bottom: 16px;
+}
+
+.dishContainerBasket {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid lightgray;
+}
+
+.dishContainerBasket button {
+    cursor: pointer;
+    height: 24px;
+    border: none;
+    background-color: white;
+    color: rgb(255, 128, 0);
+    font-weight: bold;
+    font-size: large;
+}
+
+.dishContainerBasket button:hover {
+    color: rgba(255, 128, 0, 0.8);
+    background-color: rgba(255, 128, 0, 0.1);
+}
+
 .bin {
-    height: 64px;
-    width: 64px;
+    height: 32px;
+    width: 32px;
 }
 
 .bin:hover {
     cursor: pointer;
+}
+
+#basketStickyContainer p, h4 {
+    display: flex;
+    justify-content: space-between;
+}
+
+#orderButton {
+    background-color: rgb(255, 128, 0);
+    border: none;
+    color: white;
+    font-weight: bold;
+    height: 32px;
+    cursor: pointer;
+}
+
+#orderButton:hover {
+    background-color: rgba(255, 128, 0, 0.8);
+}
+
+#orderMessage {
+    text-align: center;
 }

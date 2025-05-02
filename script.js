@@ -9,6 +9,7 @@ let basketTitleCounter = 0;
 for (let foodGroupIndex = 0; foodGroupIndex < myDishes.length; foodGroupIndex++) {
     foodGroup = myDishes[foodGroupIndex];
     foodContainer.innerHTML += foodSection;
+    document.querySelectorAll(".foodSectionImg")[foodGroupIndex].src = foodGroup.foodImg;
     document.querySelectorAll(".foodSectionTitle")[foodGroupIndex].innerHTML = foodGroup.foodTitle;
     renderDishes(foodGroup, foodGroupIndex);
 };
@@ -174,6 +175,7 @@ function renderPizzaSizeSelector(ele) {
             item.innerHTML += ".00€";
         }
     })
+    document.getElementById("pizzaSizeSelector").style.top = `${window.scrollY + 20}px`;
 }
 
 function pizzaToBasket(ele) {
@@ -199,4 +201,30 @@ function subtotalThroughSizeSelector(ele) {
         }
     }
     calculateBasketTotal();
+}
+
+function sendOrderMessage() {
+    if(document.getElementById("basketSubtotal").innerText === "" || document.getElementById("basketSubtotal").innerText === "0.00€") {
+        document.getElementById("orderMessage").innerText = "Du hast leider nicht den Mindestbestellwert erreicht.";
+        document.getElementById("orderMessage").style.color = "red";
+    } else {
+        document.getElementById("orderMessage").innerText = "Deiner Bestellung wurde aufgenommen und ist in kürze unterwegs.";
+        document.getElementById("orderMessage").style.color = "green";        
+        cleanBasket();
+    }
+}
+
+function cleanBasket() {
+    document.getElementById("basketContainer").innerHTML = "";
+    basketTitlesArray = [];
+    foodCounterArray = [];
+    pizzaTitlesArray = [];
+    foodCounter = 0;
+    basketTitleCounter = 0;
+    document.getElementById("basketSubtotal").innerText = "0.00€"
+    calculateBasketTotal();
+}
+
+function closePizzaSizeSelector() {
+    document.getElementById("pizzaSizeSelector").style.display = "none";
 }
