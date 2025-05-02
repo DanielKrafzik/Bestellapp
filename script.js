@@ -10,6 +10,7 @@ for (let foodGroupIndex = 0; foodGroupIndex < myDishes.length; foodGroupIndex++)
     foodGroup = myDishes[foodGroupIndex];
     foodContainer.innerHTML += foodSection;
     document.querySelectorAll(".foodSectionImg")[foodGroupIndex].src = foodGroup.foodImg;
+    document.querySelectorAll(".foodSectionImg")[foodGroupIndex].loading = "lazy";
     document.querySelectorAll(".foodSectionImg")[foodGroupIndex].parentElement.id = foodGroup.foodTitle.replace(" ", "");
     document.querySelectorAll(".foodSectionTitle")[foodGroupIndex].innerHTML = foodGroup.foodTitle;
     renderDishes(foodGroup, foodGroupIndex);

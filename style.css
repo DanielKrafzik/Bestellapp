@@ -167,3 +167,27 @@ footer {
 #footerLogo {
     width: 192px;
 }
+
+
+@media(max-width: 800px) {
+    nav {
+        display: flex;
+        flex-direction: column;
+        height: 64px;
+        align-items: start;
+    }
+
+    #footerLogo {
+        width: 128px;
+    }
+}
+
+@media(max-width: 450px) {
+    main {
+        flex-direction: column;
+    }
+
+    #mainContentWithImg {
+        width: 100%;
+    }
+}

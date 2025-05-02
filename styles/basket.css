@@ -69,3 +69,15 @@
 #orderMessage {
     text-align: center;
 }
+
+@media (max-width: 450px) {
+    #basketWrapper {
+        border: none;
+    }
+    
+    #basketStickyContainer {
+        width: 95%;
+        padding: 0;
+        margin: 8px;
+    }
+}
