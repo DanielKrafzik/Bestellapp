@@ -44,7 +44,6 @@ nav {
     height: 32px;
     display: flex;
     align-items: center;
-    margin-bottom: 12px;
 }
 
 .foodCultureButton {
@@ -117,7 +116,12 @@ nav {
     padding: 12px;
 }
 
-#pizzaSizeSelector h3,h4 {
+.pizzaSizeDiv {
+    display: flex;
+    justify-content: space-between;
+}
+
+#pizzaSizeSelector h3 {
     text-align: center;
 }
 
@@ -129,8 +133,12 @@ nav {
     color: rgb(255, 128, 0);
     font-weight: bold;
     font-size: large;
-    border-left: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
+    border: 1px solid lightgray;
+}
+
+#pizzaSizeSelector button:hover {    
+    color: rgba(255, 128, 0, 0.8);
+    background-color: rgba(255, 128, 0, 0.1);
 }
 
 #closePizzaSizeSelector {
@@ -138,6 +146,10 @@ nav {
     color: white !important;
     border: none !important;
     height: 32px !important;
+}
+
+#closePizzaSizeSelector:hover {
+    background-color: rgba(255, 128, 0, 0.8) !important;
 }
 
 footer {

@@ -218,7 +218,6 @@ function cleanBasket() {
     document.getElementById("basketContainer").innerHTML = "";
     basketTitlesArray = [];
     foodCounterArray = [];
-    pizzaTitlesArray = [];
     foodCounter = 0;
     basketTitleCounter = 0;
     document.getElementById("basketSubtotal").innerText = "0.00€"
