@@ -46,6 +46,11 @@ nav {
     align-items: center;
 }
 
+a {
+    text-decoration: none;
+    margin-right: 16px;
+}
+
 .foodCultureButton {
     cursor: pointer;
     height: 24px;
