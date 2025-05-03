@@ -12,7 +12,7 @@
     <link rel="shortcut icon" href="./assets/icons/favicon-16x16.png" type="image/x-icon">
     <title>Bestellapp</title>
 </head>
-<body>
+<body onload="renderDishSections()">
     <header class="maxWidth1440">
         <img id="logo" src="./assets/img/Logo.png" alt="Bestellapp Logo" loading="lazy">
     </header>
@@ -63,17 +63,17 @@
                 <div class="pizzaSizeDiv">
                     <p id="20cm">20cm</p>
                     <p id="20cmPrice" class="pizzaEuroAdding"></p>
-                    <button onclick="pizzaToBasket(this)">+</button>
+                    <button id="20cmButton" onclick="pizzaToBasket(this)">+</button>
                 </div>
                 <div class="pizzaSizeDiv">
                     <p id="26cm">26cm</p>
                     <p id="26cmPrice" class="pizzaEuroAdding"></p>
-                    <button onclick="pizzaToBasket(this)">+</button>
+                    <button id="26cmButton" onclick="pizzaToBasket(this)">+</button>
                 </div>
                 <div class="pizzaSizeDiv">
                     <p id="32cm">32cm</p>
                     <p id="32cmPrice" class="pizzaEuroAdding"></p>
-                    <button onclick="pizzaToBasket(this)">+</button>
+                    <button id="32cmButton" onclick="pizzaToBasket(this)">+</button>
                 </div>
             </div>
             <button id="closePizzaSizeSelector" onclick="closePizzaSizeSelector()">Schließen</button>

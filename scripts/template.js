@@ -1,5 +1,5 @@
 const foodSection = `
-                    <div id="">
+                    <div class="foodSection">
                         <img src="" class="foodSectionImg">
                         <h2 class="foodSectionTitle"></h2>
                         <div class="foodDishesContainer"></div>
