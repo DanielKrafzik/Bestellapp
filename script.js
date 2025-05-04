@@ -165,12 +165,6 @@ function pizzaToBasket(ele) {
     basketSubtotalSum += Number(ele.dataset.price);
     calculateSubtotal();
     document.getElementById("pizzaSizeSelector").style.display = "none";
-    /*basketTitlesArray.push(ele.dataset.title + " " + ele.dataset.size);
-    document.getElementById("basketContainer").innerHTML += dishBasket;
-    setDataPizzaButtons(ele);
-    foodCounterArray.push(1);
-    document.querySelectorAll(".orderCounter")[basketTitlesArray.indexOf(ele.dataset.title + " " + ele.dataset.size)].innerHTML = foodCounterArray[basketTitlesArray.indexOf(ele.dataset.title + " " + ele.dataset.size)];
-    ;*/
 }
 
 function setDataPizzaButtons(ele) {    
