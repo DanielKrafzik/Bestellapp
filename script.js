@@ -5,6 +5,7 @@ let pizzaTitlesArray = [];
 let foodGroup;
 let foodCounter = 0;
 let basketTitleCounter = 0;
+let basketSubtotalSum = 0;
 
 function renderDishSections () {
         for (let foodGroupIndex = 0; foodGroupIndex < myDishes.length; foodGroupIndex++) {
@@ -51,18 +52,26 @@ function addDishToBasket(ele) {
         addedDishAgainToBasket(ele);
     }
     document.querySelectorAll(".orderCounter")[basketTitlesArray.indexOf(ele.dataset.title)].innerHTML = foodCounterArray[basketTitlesArray.indexOf(ele.dataset.title)];
-    calculateSubtotalThroughDishSelection(ele);
+    calculateSubtotal();
 };
 
 function newDishToBasket(ele) {
     basketTitlesArray.push(ele.dataset.title);
     document.getElementById("basketContainer").innerHTML += dishBasket; 
     document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.dataset.title)].innerHTML = Number(ele.dataset.price).toFixed(2) + "€";
+    document.querySelectorAll(".increaseButton")[basketTitlesArray.indexOf(ele.dataset.title)].dataset.price = ele.dataset.price;
+    document.querySelectorAll(".increaseButton")[basketTitlesArray.indexOf(ele.dataset.title)].dataset.title = ele.dataset.title;
+    document.querySelectorAll(".decreaseButton")[basketTitlesArray.indexOf(ele.dataset.title)].dataset.price = ele.dataset.price;
+    document.querySelectorAll(".decreaseButton")[basketTitlesArray.indexOf(ele.dataset.title)].dataset.title = ele.dataset.title;
+    document.querySelectorAll(".bin")[basketTitlesArray.indexOf(ele.dataset.title)].dataset.price = ele.dataset.price;
+    document.querySelectorAll(".bin")[basketTitlesArray.indexOf(ele.dataset.title)].dataset.title = ele.dataset.title;
     foodCounterArray.push(1);
+    basketSubtotalSum += Number(ele.dataset.price);
     renderBasket();
 }
 
 function addedDishAgainToBasket(ele) {
+    basketSubtotalSum += Number(ele.dataset.price);
     foodCounterArray[basketTitlesArray.indexOf(ele.dataset.title)]++;
     document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.dataset.title)].innerHTML = (Math.round((Number(ele.dataset.price) * foodCounterArray[basketTitlesArray.indexOf(ele.dataset.title)]) * 100) / 100).toFixed(2) + "€";
 }
@@ -72,75 +81,47 @@ function renderBasket() {
     basketTitleCounter++;
 };
 
-//decreaser/increaser button datasets setzen
 function decreaseDish(ele) {
-    let dishPriceSum = ele.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML;
-    if(foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)] > 1) {
-        document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerHTML)].innerHTML = (Math.round(Number(dishPriceSum.replace("€", "")) / foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)] * (foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)] - 1) * 100) / 100).toFixed(2) + "€";
-        foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)]--;
-        document.querySelectorAll(".orderCounter")[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)].innerHTML = foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)];
-        calculateSubtotal(ele);
+    if(foodCounterArray[basketTitlesArray.indexOf(ele.dataset.title)] > 1) {
+        document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.dataset.title)].innerHTML = (Math.round(Number(ele.dataset.price) * (foodCounterArray[basketTitlesArray.indexOf(ele.dataset.title)] - 1) * 100) / 100).toFixed(2) + "€";
+        foodCounterArray[basketTitlesArray.indexOf(ele.dataset.title)]--;
+        document.querySelectorAll(".orderCounter")[basketTitlesArray.indexOf(ele.dataset.title)].innerHTML = foodCounterArray[basketTitlesArray.indexOf(ele.dataset.title)];
+        basketSubtotalSum -= Number(ele.dataset.price);
+        calculateSubtotal();
     } else {
         deleteDishThroughDecreaser(ele);
     }
 }
 
 function deleteDishThroughDecreaser(ele) {
-    calculateSubtotal(ele);
-    ele.parentElement.parentElement.remove();
-    foodCounterArray.splice(basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText), 1);
-    basketTitlesArray.splice(basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText), 1);
+    basketSubtotalSum -= Number(ele.dataset.price);
+    calculateSubtotal();
+    document.querySelectorAll(".completeDishBasket")[basketTitlesArray.indexOf(ele.dataset.title)].remove();
+    foodCounterArray.splice(basketTitlesArray.indexOf(ele.dataset.title), 1);
+    basketTitlesArray.splice(basketTitlesArray.indexOf(ele.dataset.title), 1);
     basketTitleCounter--;
 }
 
 function increaseDish(ele) {
-    let dishPriceSum = ele.nextElementSibling.innerHTML;
-    document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerHTML)].innerHTML = (Math.round(Number(dishPriceSum.replace("€", "")) / foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)] * (foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)] + 1) * 100) / 100).toFixed(2) + "€";
-    foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)]++;
-    document.querySelectorAll(".orderCounter")[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)].innerHTML = foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText)];
-    calculateSubtotal(ele);
+    document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.dataset.title)].innerHTML = (Math.round(Number(ele.dataset.price) * (foodCounterArray[basketTitlesArray.indexOf(ele.dataset.title)] + 1) * 100) / 100).toFixed(2) + "€";
+    foodCounterArray[basketTitlesArray.indexOf(ele.dataset.title)]++;
+    document.querySelectorAll(".orderCounter")[basketTitlesArray.indexOf(ele.dataset.title)].innerHTML = foodCounterArray[basketTitlesArray.indexOf(ele.dataset.title)];
+    basketSubtotalSum += Number(ele.dataset.price);
+    calculateSubtotal();
 }
 
 function deleteDish(ele) {
-    document.getElementById("basketSubtotal").innerHTML = (Math.round((Number(document.getElementById("basketSubtotal").innerHTML.replace("€", "")) - Number(ele.previousElementSibling.innerHTML.replace("€", ""))) * 100) / 100).toFixed(2) + "€";
+    basketSubtotalSum = Math.round((basketSubtotalSum - Number(ele.dataset.price) * foodCounterArray[basketTitlesArray.indexOf(ele.dataset.title)]) * 100) / 100;
+    document.getElementById("basketSubtotal").innerHTML = basketSubtotalSum.toFixed(2) + "€";
     calculateBasketTotal();
-    ele.parentElement.parentElement.remove();
-    foodCounterArray.splice(basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText), 1);
-    basketTitlesArray.splice(basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerText), 1);
+    document.querySelectorAll(".completeDishBasket")[basketTitlesArray.indexOf(ele.dataset.title)].remove();
+    foodCounterArray.splice(basketTitlesArray.indexOf(ele.dataset.title), 1);
+    basketTitlesArray.splice(basketTitlesArray.indexOf(ele.dataset.title), 1);
     basketTitleCounter--;
 }
 
-function calculateSubtotal(ele) {
-    if(document.getElementById("basketSubtotal").innerHTML === "" || document.getElementById("basketSubtotal").innerHTML === "0") {
-        calculateSubtotalIfEmpty(ele);
-    } else {
-        calculateSubtotalWithValue(ele);
-    }
-    calculateBasketTotal();
-} 
-
-function calculateSubtotalIfEmpty(ele) {
-    if(ele.innerText === "+") {
-        document.getElementById("basketSubtotal").innerHTML = ele.nextElementSibling.innerText;
-    } else {
-        document.getElementById("basketSubtotal").innerHTML = ele.nextElementSibling.nextElementSibling.nextElementSibling.innerText;
-    }
-}
-
-function calculateSubtotalWithValue(ele) {
-    if (ele.innerText === "+") {
-        document.getElementById("basketSubtotal").innerHTML = (Math.round((Number(document.getElementById("basketSubtotal").innerHTML.replace("€", "")) + Number(ele.nextElementSibling.innerText.replace("€", "")) / foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerHTML)]) * 100) / 100).toFixed(2) + "€";
-    } else {
-        document.getElementById("basketSubtotal").innerHTML = (Math.round((Number(document.getElementById("basketSubtotal").innerHTML.replace("€", "")) - Number(ele.nextElementSibling.nextElementSibling.nextElementSibling.innerText.replace("€", "")) / foodCounterArray[basketTitlesArray.indexOf(ele.parentElement.previousElementSibling.innerHTML)]) * 100) / 100).toFixed(2) + "€";
-    }
-}
-
-function calculateSubtotalThroughDishSelection(ele) {
-    if(document.getElementById("basketSubtotal").innerHTML === "" || document.getElementById("basketSubtotal").innerHTML === "0") {
-        document.getElementById("basketSubtotal").innerHTML = ele.previousElementSibling.innerText;
-    } else {
-        document.getElementById("basketSubtotal").innerHTML = (Math.round((Number(document.getElementById("basketSubtotal").innerHTML.replace("€", "")) + Number(ele.previousElementSibling.innerHTML.replace("€", ""))) * 100) / 100).toFixed(2) + "€";
-    }
+function calculateSubtotal() {
+    document.getElementById("basketSubtotal").innerHTML = basketSubtotalSum.toFixed(2) + "€";
     calculateBasketTotal();
 }
 
@@ -149,49 +130,64 @@ function calculateBasketTotal() {
 }
 
 function renderPizzaSizeSelector(ele) {
-    document.getElementById("pizzaSizeSelectorTitle").innerHTML = ele.closest(".singleDishContainer").querySelector(".foodDishesTitle").innerHTML;    
+    document.getElementById("pizzaSizeSelectorTitle").innerHTML = ele.dataset.title;    
     setDataPizzaSizeSelector(ele);
     document.getElementById("pizzaSizeSelector").style.top = `${window.scrollY + 20}px`;
 }
 
 function setDataPizzaSizeSelector(ele) {
-    document.getElementById("20cmPrice").innerHTML = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.closest(".singleDishContainer").querySelector(".foodDishesTitle").innerHTML)].price["20cm"].toFixed(2) + "€";
-    document.getElementById("20cmButton").dataset.price = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.closest(".singleDishContainer").querySelector(".foodDishesTitle").innerHTML)].price["20cm"];
-    document.getElementById("20cmButton").dataset.title = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.closest(".singleDishContainer").querySelector(".foodDishesTitle").innerHTML)].name;
+    document.getElementById("20cmPrice").innerHTML = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.dataset.title)].price["20cm"].toFixed(2) + "€";
+    document.getElementById("20cmButton").dataset.price = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.dataset.title)].price["20cm"];
+    document.getElementById("20cmButton").dataset.title = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.dataset.title)].name;
     document.getElementById("20cmButton").dataset.size = "20cm";
-    document.getElementById("26cmPrice").innerHTML = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.closest(".singleDishContainer").querySelector(".foodDishesTitle").innerHTML)].price["26cm"].toFixed(2) + "€";
-    document.getElementById("26cmButton").dataset.price = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.closest(".singleDishContainer").querySelector(".foodDishesTitle").innerHTML)].price["26cm"];
-    document.getElementById("26cmButton").dataset.title = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.closest(".singleDishContainer").querySelector(".foodDishesTitle").innerHTML)].name;
+    document.getElementById("26cmPrice").innerHTML = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.dataset.title)].price["26cm"].toFixed(2) + "€";
+    document.getElementById("26cmButton").dataset.price = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.dataset.title)].price["26cm"];
+    document.getElementById("26cmButton").dataset.title = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.dataset.title)].name;
     document.getElementById("26cmButton").dataset.size = "26cm";
-    document.getElementById("32cmPrice").innerHTML = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.closest(".singleDishContainer").querySelector(".foodDishesTitle").innerHTML)].price["32cm"].toFixed(2) + "€";
-    document.getElementById("32cmButton").dataset.price = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.closest(".singleDishContainer").querySelector(".foodDishesTitle").innerHTML)].price["32cm"];
-    document.getElementById("32cmButton").dataset.title = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.closest(".singleDishContainer").querySelector(".foodDishesTitle").innerHTML)].name;
+    document.getElementById("32cmPrice").innerHTML = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.dataset.title)].price["32cm"].toFixed(2) + "€";
+    document.getElementById("32cmButton").dataset.price = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.dataset.title)].price["32cm"];
+    document.getElementById("32cmButton").dataset.title = myDishes[0].foodData[pizzaTitlesArray.indexOf(ele.dataset.title)].name;
     document.getElementById("32cmButton").dataset.size = "32cm";
 }
 
 function pizzaToBasket(ele) {
-    console.log(document.getElementById("pizzaSizeSelectorTitle").innerText + " " + ele.previousElementSibling.previousElementSibling.innerText)
-    basketTitlesArray.push(document.getElementById("pizzaSizeSelectorTitle").innerText + " " + ele.previousElementSibling.previousElementSibling.innerText);
-    document.getElementById("basketContainer").innerHTML += dishBasket;
-    document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(document.getElementById("pizzaSizeSelectorTitle").innerText + " " + ele.previousElementSibling.previousElementSibling.innerText)].innerHTML = ele.previousElementSibling.innerHTML;
-    foodCounterArray.push(1);
-    document.querySelectorAll(".orderCounter")[basketTitlesArray.indexOf(document.getElementById("pizzaSizeSelectorTitle").innerText + " " + ele.previousElementSibling.previousElementSibling.innerText)].innerHTML = foodCounterArray[basketTitlesArray.indexOf(document.getElementById("pizzaSizeSelectorTitle").innerText + " " + ele.previousElementSibling.previousElementSibling.innerText)];
-    renderBasket();
-    subtotalThroughSizeSelector(ele);
+    if(!basketTitlesArray.includes(ele.dataset.title + " " + ele.dataset.size)) {
+        basketTitlesArray.push(ele.dataset.title + " " + ele.dataset.size);
+        document.getElementById("basketContainer").innerHTML += dishBasket;
+        setDataPizzaButtons(ele);        
+        foodCounterArray.push(1);
+        renderBasket();
+    } else {
+        foodCounterArray[basketTitlesArray.indexOf(ele.dataset.title + " " + ele.dataset.size)]++;
+        document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.dataset.title + " " + ele.dataset.size)].innerHTML = (Math.round((Number(ele.dataset.price) * foodCounterArray[basketTitlesArray.indexOf(ele.dataset.title + " " + ele.dataset.size)]) * 100) / 100).toFixed(2) + "€";
+    }
+    document.querySelectorAll(".orderCounter")[basketTitlesArray.indexOf(ele.dataset.title + " " + ele.dataset.size)].innerHTML = foodCounterArray[basketTitlesArray.indexOf(ele.dataset.title + " " + ele.dataset.size)];
+    basketSubtotalSum += Number(ele.dataset.price);
+    calculateSubtotal();
     document.getElementById("pizzaSizeSelector").style.display = "none";
+    /*basketTitlesArray.push(ele.dataset.title + " " + ele.dataset.size);
+    document.getElementById("basketContainer").innerHTML += dishBasket;
+    setDataPizzaButtons(ele);
+    foodCounterArray.push(1);
+    document.querySelectorAll(".orderCounter")[basketTitlesArray.indexOf(ele.dataset.title + " " + ele.dataset.size)].innerHTML = foodCounterArray[basketTitlesArray.indexOf(ele.dataset.title + " " + ele.dataset.size)];
+    ;*/
 }
 
-function subtotalThroughSizeSelector(ele) {
-    if(document.getElementById("basketSubtotal").innerHTML === "" || document.getElementById("basketSubtotal").innerHTML === "0") {
-        document.getElementById("basketSubtotal").innerHTML = ele.previousElementSibling.innerText;
-    } else {
-        document.getElementById("basketSubtotal").innerHTML = (Math.round((Number(document.getElementById("basketSubtotal").innerHTML.replace("€", "")) + Number(ele.previousElementSibling.innerText.replace("€", ""))) * 100) / 100).toFixed(2) + "€";
-    }
-    calculateBasketTotal();
+function setDataPizzaButtons(ele) {    
+    document.querySelectorAll(".basketFoodPrice")[basketTitlesArray.indexOf(ele.dataset.title + " " + ele.dataset.size)].innerHTML = Number(ele.dataset.price).toFixed(2) + "€";
+    document.querySelectorAll(".increaseButton")[basketTitlesArray.indexOf(ele.dataset.title + " " + ele.dataset.size)].dataset.price = ele.dataset.price;
+    document.querySelectorAll(".increaseButton")[basketTitlesArray.indexOf(ele.dataset.title + " " + ele.dataset.size)].dataset.title = ele.dataset.title + " " + ele.dataset.size;
+    document.querySelectorAll(".increaseButton")[basketTitlesArray.indexOf(ele.dataset.title + " " + ele.dataset.size)].dataset.size = ele.dataset.size;
+    document.querySelectorAll(".decreaseButton")[basketTitlesArray.indexOf(ele.dataset.title + " " + ele.dataset.size)].dataset.price = ele.dataset.price;
+    document.querySelectorAll(".decreaseButton")[basketTitlesArray.indexOf(ele.dataset.title + " " + ele.dataset.size)].dataset.title = ele.dataset.title + " " + ele.dataset.size;
+    document.querySelectorAll(".decreaseButton")[basketTitlesArray.indexOf(ele.dataset.title + " " + ele.dataset.size)].dataset.size = ele.dataset.size;
+    document.querySelectorAll(".bin")[basketTitlesArray.indexOf(ele.dataset.title + " " + ele.dataset.size)].dataset.price = ele.dataset.price;
+    document.querySelectorAll(".bin")[basketTitlesArray.indexOf(ele.dataset.title + " " + ele.dataset.size)].dataset.title = ele.dataset.title + " " + ele.dataset.size;
+    document.querySelectorAll(".bin")[basketTitlesArray.indexOf(ele.dataset.title + " " + ele.dataset.size)].dataset.size = ele.dataset.size;
 }
 
 function sendOrderMessage() {
-    if(document.getElementById("basketSubtotal").innerText === "" || document.getElementById("basketSubtotal").innerText === "0.00€") {
+    if(basketSubtotalSum === 0) {
         document.getElementById("orderMessage").innerText = "Du hast leider nicht den Mindestbestellwert erreicht.";
         document.getElementById("orderMessage").style.color = "red";
     } else {
@@ -207,6 +203,7 @@ function cleanBasket() {
     foodCounterArray = [];
     foodCounter = 0;
     basketTitleCounter = 0;
+    basketSubtotalSum = 0;
     document.getElementById("basketSubtotal").innerText = "0.00€"
     calculateBasketTotal();
 }

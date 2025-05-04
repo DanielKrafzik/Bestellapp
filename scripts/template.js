@@ -16,12 +16,12 @@ const foodDish = `
 `;
 
 const dishBasket = `
-                    <div>
+                    <div class="completeDishBasket">
                         <h3 class="basketFoodTitle"></h3>
                         <div class="dishContainerBasket">
-                            <button onClick="decreaseDish(this)">-</button>
+                            <button class="decreaseButton" onClick="decreaseDish(this)">-</button>
                             <p class="orderCounter"></p>
-                            <button onClick="increaseDish(this)">+</button>
+                            <button class="increaseButton" onClick="increaseDish(this)">+</button>
                             <p class="basketFoodPrice"></p>
                             <img src="./assets/img/bin2.svg" onClick="deleteDish(this)" class="bin">
                         </div>
